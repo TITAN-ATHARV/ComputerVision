@@ -1,0 +1,51 @@
+video:
+  input_path: data/traffic.mp4
+  max_frames: null
+
+runtime:
+  device: cpu
+  adaptive_fallback: true
+  fallback_fps_threshold: 8.0
+
+models:
+  detection: yolo11n.pt
+  segmentation: yolo11n-seg.pt
+  pose: yolo11n-pose.pt
+  plate: null
+
+pipeline:
+  seg_every_n: 2
+  pose_every_n: 2
+  plate_every_n: 5
+  show_speed: true
+
+speed:
+  meters_per_pixel: 0.05
+  smoothing_alpha: 0.3
+  window_size: 8
+  min_track_age: 6
+  stationary_displacement_px: 8.0
+  min_speed_kmh: 2.0
+  max_speed_kmh: 180.0
+  confidence_threshold: 0.35
+  src_points: []
+  dst_points: []
+  alpr_min_text_len: 4
+  alpr_min_ocr_conf: 0.25
+  alpr_vote_window: 8
+  alpr_stable_votes: 3
+
+events:
+  output_path: outputs/events.jsonl
+  stop_speed_kmh: 1.5
+  stop_frames: 45
+  harsh_brake_delta_kmh: 18.0
+  wrong_way_axis: x
+  wrong_way_sign: -1
+
+lanes:
+  - name: lane_1
+    polygon: [[0, 0], [1279, 0], [1279, 719], [0, 719]]
+    line_p1: [0, 360]
+    line_p2: [1279, 360]
+
